@@ -4,7 +4,7 @@ const {
   invalidLenthMessage,
   emailRegExp,
 } = require("../helpers/constants");
-const handleMongooseError = require("../middlewares/handle-mongoose-error");
+const handleMongooseError = require("../helpers/handle-mongoose-error");
 
 const userSchema = new Schema(
   {

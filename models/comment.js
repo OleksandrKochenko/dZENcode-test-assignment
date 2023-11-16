@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 const { requiredMessage } = require("../helpers/constants");
-const handleMongooseError = require("../middlewares/handle-mongoose-error");
+const handleMongooseError = require("../helpers/handle-mongoose-error");
 
 const commentSchema = new Schema(
   {
