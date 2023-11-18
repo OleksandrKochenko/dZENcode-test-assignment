@@ -5,6 +5,7 @@ require("dotenv").config();
 
 const authRouter = require("./routes/auth-routes");
 const apiRouter = require("./routes/api-routes");
+const multer = require("multer");
 
 const app = express();
 
@@ -22,7 +23,11 @@ app.use((req, res) => {
 
 app.use((err, req, res, next) => {
   const { status = 500, message } = err;
-  res.status(status).json({ message, success: false });
+  if (err instanceof multer.MulterError) {
+    res.status(422).json({ message });
+  } else {
+    res.status(status).json({ message });
+  }
 });
 
 module.exports = app;
