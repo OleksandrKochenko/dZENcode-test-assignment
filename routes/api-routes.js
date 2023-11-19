@@ -1,7 +1,17 @@
 const express = require("express");
-const { getUsers } = require("../controllers/api-controllers");
+require("dotenv").config();
+const { CAPTCHA_SITE_KEY } = process.env;
+
+const {
+  getUsers,
+  addComent,
+  addAuthComment,
+} = require("../controllers/api-controllers");
 const optimizeImages = require("../middlewares/optimize-images");
 const upload = require("../middlewares/upload");
+const reCaptcha = require("../middlewares/validate-captcha");
+const authenticate = require("../middlewares/authenticate");
+const { validateTextBody } = require("../middlewares/validate-body");
 
 const router = express.Router();
 
@@ -16,8 +26,22 @@ const testFiles = (req, res, next) => {
 };
 
 router.get("/test-form", (req, res) => {
-  res.render("index");
+  res.render("index", { key: CAPTCHA_SITE_KEY });
 });
+
+router.post("/comment", reCaptcha, addComent);
+
+router.post(
+  "/comment-auth",
+  authenticate,
+  upload.fields([
+    { name: "text_file", maxCount: 1 },
+    { name: "img", maxCount: 3 },
+  ]),
+  optimizeImages,
+  validateTextBody,
+  addAuthComment
+);
 
 router.get("/users", getUsers);
 

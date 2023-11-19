@@ -41,6 +41,7 @@ const optimizeImages = async (req, res, next) => {
           height: 150,
         });
         await resized.toFile(el.path);
+        console.log("RESIZED", new Date());
       });
     }
 
