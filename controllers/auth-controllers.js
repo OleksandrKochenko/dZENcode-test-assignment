@@ -10,7 +10,7 @@ const signup = async (req, res, next) => {
   try {
     const {
       body,
-      // file
+      // files
     } = req.body;
 
     const existedUser = await User.findOne({ email: body.email });
@@ -18,9 +18,9 @@ const signup = async (req, res, next) => {
 
     const hashedPswrd = await bcrypt.hash(body.password, 10);
 
-    //   if (file.path) {
+    /* if (files) {
 
-    //   }
+    } */
 
     // const avatarLink =
     //   avatarBaseUrl + `?name=${name.replace(/ /g, "+")}` + avatarSettings;

@@ -15,6 +15,10 @@ const testFiles = (req, res, next) => {
   }
 };
 
+router.get("/test-form", (req, res) => {
+  res.render("index");
+});
+
 router.get("/users", getUsers);
 
 router.post(
