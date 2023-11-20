@@ -9,17 +9,18 @@ const authenticate = async (req, res, next) => {
   const { authorization = "" } = req.headers;
   const [bearer, token] = authorization.split(" ");
   if (bearer !== "Bearer") {
+    console.log("Not authorizated");
     next(httpError(401, "Unauthorized request"));
   }
   try {
     const { id } = jwt.verify(token, SECRET_KEY);
     const user = await User.findById(id, "-password");
     if (!user || !user.token) next(httpError(401));
-
+    console.log("authorizated");
     req.user = user;
     next();
-  } catch {
-    next(httpError(401));
+  } catch (error) {
+    next(error);
   }
 };
 

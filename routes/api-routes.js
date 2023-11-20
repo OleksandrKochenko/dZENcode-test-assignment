@@ -5,6 +5,10 @@ const {
   getUsers,
   addComent,
   addAuthComment,
+  getUserById,
+  getComments,
+  getCommentById,
+  getMyComments,
 } = require("../controllers/api-controllers");
 const upload = require("../middlewares/upload");
 const reCaptcha = require("../middlewares/validate-captcha");
@@ -13,6 +17,7 @@ const {
   validateTextBody,
   validateUnauthTextBody,
 } = require("../middlewares/validate-body");
+const isValidId = require("../middlewares/isValidId");
 
 const router = express.Router();
 
@@ -33,6 +38,14 @@ router.post(
   addAuthComment
 );
 
+router.get("/comments", getComments);
+
+router.get("/comments/my", authenticate, getMyComments);
+
+router.get("/comments/:id", isValidId, getCommentById);
+
 router.get("/users", getUsers);
+
+router.get("/users/:id", isValidId, getUserById);
 
 module.exports = router;
