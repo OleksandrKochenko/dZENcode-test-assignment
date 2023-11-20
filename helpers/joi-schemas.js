@@ -34,30 +34,77 @@ const registerSchema = Joi.object({
       "any.required": `${invalidLenthMessage}`,
       "string.min": `${invalidLenthMessage}`,
     }),
-  home_page: Joi.string(),
+  home_page: Joi.string().allow(null, ""),
 });
 
-// const userLoginSchema = Joi.object({
-//   email: Joi.string()
-//     .pattern(userEmailRegExp)
-//     .required()
-//     .messages({
-//       "any.required": `${userEmailMessage}`,
-//       "string.pattern.base": `invalid email`,
-//     }),
-//   password: Joi.string()
-//     .required()
-//     .messages({
-//       "any.required": `${userPasswordMessage}`,
-//     }),
-// });
+const loginSchema = Joi.object({
+  email: Joi.string()
+    .pattern(emailRegExp)
+    .required()
+    .min(2)
+    .max(60)
+    .messages({
+      "any.required": `${requiredMessage}`,
+      "string.pattern.base": `invalid email`,
+      "string.min": `${invalidLenthMessage}`,
+      "string.max": `${invalidLenthMessage}`,
+    }),
+  password: Joi.string()
+    .min(6)
+    .required()
+    .messages({
+      "any.required": `${invalidLenthMessage}`,
+      "string.min": `${invalidLenthMessage}`,
+    }),
+});
 
-// const userUpdateSchema = Joi.object({
-//   name: Joi.string(),
-//   password: Joi.string().min(6).messages({
-//     "string.min": "invalid length of password",
-//   }),
-// });
+const userUpdateSchema = Joi.object({
+  name: Joi.string()
+    .allow(null, "")
+    .min(2)
+    .max(60)
+    .messages({
+      "string.min": `${invalidLenthMessage}`,
+      "string.max": `${invalidLenthMessage}`,
+    }),
+  password: Joi.string()
+    .allow(null, "")
+    .min(6)
+    .messages({
+      "string.min": `${invalidLenthMessage}`,
+    }),
+  home_page: Joi.string().allow(null, ""),
+});
+
+const unauthCommentSchema = Joi.object({
+  name: Joi.string()
+    .required()
+    .min(2)
+    .max(60)
+    .messages({
+      "any.required": `${requiredMessage}`,
+      "string.min": `${invalidLenthMessage}`,
+      "string.max": `${invalidLenthMessage}`,
+    }),
+  email: Joi.string()
+    .pattern(emailRegExp)
+    .required()
+    .min(2)
+    .max(60)
+    .messages({
+      "any.required": `${requiredMessage}`,
+      "string.pattern.base": `invalid email`,
+      "string.min": `${invalidLenthMessage}`,
+      "string.max": `${invalidLenthMessage}`,
+    }),
+  text: Joi.string()
+    .required()
+    .messages({
+      "any.required": `${requiredMessage}`,
+    }),
+  home_page: Joi.string().allow(null, ""),
+  thread_of: Joi.string().allow(null, ""),
+});
 
 const commentSchema = Joi.object({
   text: Joi.string()
@@ -65,12 +112,13 @@ const commentSchema = Joi.object({
     .messages({
       "any.required": `${requiredMessage}`,
     }),
-  thread_of: Joi.string(),
+  thread_of: Joi.string().allow(null, ""),
 });
 
 module.exports = {
   registerSchema,
-  //   userLoginSchema,
-  //   userUpdateSchema,
+  loginSchema,
+  userUpdateSchema,
   commentSchema,
+  unauthCommentSchema,
 };

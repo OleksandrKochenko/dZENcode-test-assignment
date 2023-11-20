@@ -19,6 +19,7 @@ const reCaptcha = async (req, res, next) => {
     if (!data.success) {
       throw httpError(400, "reCAPTCHA validation has failed");
     }
+    delete body["g-recaptcha-response"];
     next();
   } catch (error) {
     next(error);

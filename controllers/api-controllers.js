@@ -1,8 +1,9 @@
+const Comment = require("../models/comment");
 const User = require("../models/user");
 
 const getUsers = async (req, res, next) => {
   try {
-    const users = await User.find({}, "-password");
+    const users = await User.find({}, "-password -token");
     res.json(users);
   } catch (error) {
     next(error);
@@ -11,11 +12,13 @@ const getUsers = async (req, res, next) => {
 
 const addComent = async (req, res, next) => {
   try {
-    const { name, email, home_page: homePage, text } = req.body;
+    const { email, text } = req.body;
+    const user = await User.findOne({ email });
+    const data = user ? { text, owner: user._id } : { text };
+    const { _id } = await Comment.create({ ...data });
     res.json({
-      message:
-        "Comment creation has successfully passed reCAPTCHA and got data",
-      data: { name, email, homePage, text },
+      message: "Comment created with reCAPTCHA",
+      commentId: _id,
     });
   } catch (error) {
     next(error);
