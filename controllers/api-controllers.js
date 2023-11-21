@@ -1,3 +1,5 @@
+const httpError = require("../helpers/http-error");
+const { uploadTxt, uploadImages } = require("../helpers/uploadCommentFiles");
 const Comment = require("../models/comment");
 const User = require("../models/user");
 
@@ -38,10 +40,14 @@ const addComent = async (req, res, next) => {
 const addAuthComment = async (req, res, next) => {
   try {
     const { body, user, files } = req;
+    const txtUrls = await uploadTxt(files.text_file);
+    const imgUrls = await uploadImages(files.img);
+    body.img = imgUrls;
+    body.text_file = txtUrls;
+    body.owner = user._id;
+    const { _id } = await Comment.create({ ...body });
 
-    // wright this complicated controller
-
-    res.json({ body, user, files });
+    res.status(201).json({ message: "Comment added", commentId: _id });
   } catch (error) {
     next(error);
   }
@@ -89,6 +95,23 @@ const getMyComments = async (req, res, next) => {
   }
 };
 
+const deleteMyComment = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const comment = await Comment.findById(id);
+    if (!comment) {
+      throw httpError(404, "Comment not found");
+    }
+    if (!comment.owner.equals(req.user._id)) {
+      throw httpError(400, "Is not owner of comment");
+    }
+    await Comment.findByIdAndDelete(id);
+    res.json({ message: "Comment deleted", commentId: id });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getUsers,
   getUserById,
@@ -97,4 +120,5 @@ module.exports = {
   getComments,
   getCommentById,
   getMyComments,
+  deleteMyComment,
 };

@@ -9,10 +9,10 @@ const commentSchema = new Schema(
       required: [true, requiredMessage],
     },
     img: {
-      type: String,
+      type: [String],
     },
     text_file: {
-      type: String,
+      type: [String],
     },
     owner: {
       type: Schema.Types.ObjectId,
