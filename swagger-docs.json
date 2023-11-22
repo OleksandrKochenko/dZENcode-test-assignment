@@ -1,0 +1,1382 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "REST API for comments app",
+    "description": "dZENcode test assignment API documentation",
+    "contact": {
+      "name": "Oleksandr Kochenko",
+      "url": "https://oleksandrkochenko.github.io/CV/",
+      "email": "kochenko.fop@gmail.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://dzencode-test-ryk0.onrender.com"
+    },
+    {
+      "url": "http://localhost:3000/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "User authorisation"
+    },
+    {
+      "name": "Api",
+      "description": "Other operations"
+    }
+  ],
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Register a new user",
+        "operationId": "signup",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/auth_signup_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_201"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_409"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/signin": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "User log in",
+        "operationId": "signin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/auth_signin_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/update": {
+      "put": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Update user data (don't available to change e-mail)",
+        "operationId": "update",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/auth_update_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_1"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_400_1"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/auth/current": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Check user ligged in",
+        "operationId": "current",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_2"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/auth/signout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Log out",
+        "operationId": "signout",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_3"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/test-form": {
+      "get": {
+        "tags": [
+          "Api"
+        ],
+        "description": "HTML form for testing reCAPTCHA validation on creating new comment by unauthorized user <br/> <b>To test, please open form on browser (<base-url>/api/test-form)<b/>",
+        "operationId": "testCaptcha",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "Get a HTML page on browser"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/comment": {
+      "post": {
+        "tags": [
+          "Api"
+        ],
+        "description": "Adds a new comment by unauthorized user with reCAPTCHA validation<br/> <b>To check response, please submit form on browser (<base-url>/api/test-form)</b> <br/> After submit you will be redirected to api/comment to check result",
+        "operationId": "postUnauthComment",
+        "responses": {
+          "200": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_4"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_400_2"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/comment-auth": {
+      "post": {
+        "tags": [
+          "Api"
+        ],
+        "description": "Adds a new comment by authorized user",
+        "operationId": "addAuthComment",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/api_commentauth_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Succes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_201_1"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_400_3"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/comments": {
+      "get": {
+        "tags": [
+          "Api"
+        ],
+        "description": "Returns comments list in accordance with query parameters",
+        "operationId": "getComments",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number (default 1)",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "2"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "documents per page (default 25)",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "5"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_5"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/comments/my": {
+      "get": {
+        "tags": [
+          "Api"
+        ],
+        "description": "Returns comments of current user",
+        "operationId": "getOwnComments",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number (default 1)",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "2"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "documents per page (default 25)",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "5"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_5"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/comments/{id}": {
+      "get": {
+        "tags": [
+          "Api"
+        ],
+        "description": "Returns comment by id",
+        "operationId": "getCommentById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of comment to return",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "655675273556114d810b78bd",
+                "6556765a52a385843c026e03",
+                "6556765a52a385843c026e01"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_6"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_422_1"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Api"
+        ],
+        "description": "Deletes comment by authorized user (only own comments)",
+        "operationId": "deleteComment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of comment to delete",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_7"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_400_4"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_422_1"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/users": {
+      "get": {
+        "tags": [
+          "Api"
+        ],
+        "description": "Returns users list",
+        "operationId": "getUsers",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/{id}": {
+      "get": {
+        "tags": [
+          "Api"
+        ],
+        "description": "Returns user by id",
+        "operationId": "getUserById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of user to return",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "655676327b53542a4f15eb3a",
+                "655676327b53542a4f15eb32",
+                "655676327b53542a4f15eb37"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_8"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_422_1"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "65538751b374715901fe334a"
+          },
+          "name": {
+            "type": "string",
+            "example": "Li Wein"
+          },
+          "email": {
+            "type": "string",
+            "example": "l.wein@mail.com"
+          },
+          "avatar": {
+            "type": "string",
+            "example": "http://res.cloudinary.com/dvloxectq/image/upload/v1699972944/users/gocbynfvtecaobtfrbvd.jpg"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2023-11-16T19:18:25.993Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2023-11-16T19:18:25.993Z"
+          }
+        }
+      },
+      "Comment": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "655675273556114d810b78bc"
+          },
+          "text": {
+            "type": "string",
+            "example": "Torrens nesciunt velum quaerat tremo soluta vapulus agnosco vigilo. Artificiose comptus cursus apparatus adflicto cornu cupio deporto arto. Trucido cattus thermae comptus subnecto vulgivagus bellicus. Addo defleo aliquam socius contabesco."
+          },
+          "owner": {
+            "type": "string",
+            "example": "65566b01d47289a61b0893c4"
+          },
+          "img": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "text_file": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2023-11-16T20:01:43.947Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2023-11-16T20:01:43.947Z"
+          }
+        }
+      },
+      "NotFound": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Page not found"
+          }
+        }
+      },
+      "Unauthorized": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "error message",
+            "example": "Unauthorized request"
+          }
+        }
+      },
+      "ServerError": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Server error"
+          }
+        }
+      },
+      "auth_signup_body": {
+        "required": [
+          "avatar",
+          "email",
+          "name",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Username should contain 2-60 characters",
+            "example": "John Johnson"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email, must be a valid email, should contain 2-100 characters",
+            "format": "email",
+            "example": "test.user@mail.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "Min 6 characters",
+            "format": "password",
+            "example": "Ng67$32_"
+          },
+          "home_page": {
+            "type": "string",
+            "description": "Link to home page",
+            "example": "http://mypageurl.cpm"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "Available file types image/jpeg, image/gif, image/png. Maximum file size - 1,5 Mb.",
+            "format": "binary"
+          }
+        }
+      },
+      "inline_response_201": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "operation message",
+            "example": "User registered"
+          },
+          "userId": {
+            "type": "string",
+            "description": "new user id",
+            "example": "655e3328aff5253ad6c13fe4"
+          }
+        }
+      },
+      "inline_response_400": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "error message",
+            "example": "Invalid length / Field required / Invalid email"
+          }
+        }
+      },
+      "inline_response_409": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "error message",
+            "example": "Email already in use"
+          }
+        }
+      },
+      "inline_response_422": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "error message",
+            "example": "Unaccepted file type / File too large"
+          }
+        }
+      },
+      "auth_signin_body": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User email, must be a valid email, should contain 2-100 characters",
+            "format": "email",
+            "example": "test.user@mail.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "Min 6 characters",
+            "format": "password",
+            "example": "Ng67$32_"
+          }
+        }
+      },
+      "inline_response_200": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "operation message",
+            "example": "User logged in"
+          },
+          "token": {
+            "type": "string",
+            "description": "login token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWJhZDJlYTY2MDZmNmFkNTViZTQwMyIsImlhdCI6MTcwMDY3NzE3MSwiZXhwIjoxNzAwNzU5OTcxfQ.FrYosHnedqZ86M53dVpNxSig9RkBQPyFuVgCNKgla10"
+          },
+          "userId": {
+            "type": "string",
+            "description": "user id",
+            "example": "655e3328aff5253ad6c13fe4"
+          }
+        }
+      },
+      "inline_response_401": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "error message",
+            "example": "Email or password is wrong"
+          }
+        }
+      },
+      "auth_update_body": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Username should contain 2-60 characters",
+            "example": "John Johnson"
+          },
+          "password": {
+            "type": "string",
+            "description": "Min 6 characters",
+            "format": "password",
+            "example": "Ng67$32_"
+          },
+          "home_page": {
+            "type": "string",
+            "description": "Link to home page",
+            "example": "http://mypageurl.cpm"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "Available file types image/jpeg, image/gif, image/png. Maximum file size - 1,5 Mb.",
+            "format": "binary"
+          }
+        }
+      },
+      "inline_response_200_1": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "operation message",
+            "example": "User updated"
+          },
+          "userId": {
+            "type": "string",
+            "description": "user id",
+            "example": "655e3328aff5253ad6c13fe4"
+          }
+        }
+      },
+      "inline_response_400_1": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "error message",
+            "example": "Invalid length"
+          }
+        }
+      },
+      "inline_response_200_2": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "operation message",
+            "example": "User is current"
+          },
+          "user": {
+            "$ref": "#/components/schemas/inline_response_200_2_user"
+          }
+        }
+      },
+      "inline_response_200_3": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "operation message",
+            "example": "User signed out"
+          },
+          "userId": {
+            "type": "string",
+            "description": "current user id",
+            "example": "65538751b374715901fe334a"
+          }
+        }
+      },
+      "inline_response_200_4": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Comment created with reCAPTCHA"
+          },
+          "commentId": {
+            "type": "string",
+            "example": "655675273556114d810b78b9"
+          }
+        }
+      },
+      "inline_response_400_2": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "error message",
+            "example": "Validate reCAPTCHA first / reCAPTCHA validation has failed / Invalid length / Field required / Invalid email"
+          }
+        }
+      },
+      "api_commentauth_body": {
+        "required": [
+          "text"
+        ],
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "Text of comment",
+            "example": "Vulpes arx tonsor. Illo ager unus admoveo tonsor. Debilito vomica velut vomer cupiditate."
+          },
+          "thread_of": {
+            "type": "string",
+            "description": "Id of the comment in response to which the current comment is being created",
+            "example": "6556765a52a385843c026df4"
+          },
+          "text_file": {
+            "type": "string",
+            "description": "Text file added to the comment (max - 1, available file type - text/plain, max size - 100Kb)",
+            "format": "binary"
+          },
+          "img": {
+            "type": "string",
+            "description": "Images added to the comment (max - 3, available file types - image/jpeg, image/gif, image/png, max size - 1,5Mb )",
+            "format": "binary"
+          }
+        }
+      },
+      "inline_response_201_1": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Comment added"
+          },
+          "commentId": {
+            "type": "string",
+            "example": "655675273556114d810b78b9"
+          }
+        }
+      },
+      "inline_response_400_3": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "error message",
+            "example": "Field required"
+          }
+        }
+      },
+      "inline_response_200_5": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "number",
+            "description": "current page",
+            "example": 1
+          },
+          "perPage": {
+            "type": "number",
+            "description": "documents per pages",
+            "example": 25
+          },
+          "total": {
+            "type": "number",
+            "description": "total comments",
+            "example": 58
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Comment"
+            }
+          }
+        }
+      },
+      "inline_response_200_6": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Got comment by id"
+          },
+          "comment": {
+            "$ref": "#/components/schemas/Comment"
+          }
+        }
+      },
+      "inline_response_422_1": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "error message",
+            "example": "Invalid id format"
+          }
+        }
+      },
+      "inline_response_200_7": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Comment deleted"
+          },
+          "commentId": {
+            "type": "string",
+            "example": "6556765a52a385843c026e01"
+          }
+        }
+      },
+      "inline_response_400_4": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Is not owner of comment"
+          }
+        }
+      },
+      "inline_response_200_8": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "inline_response_200_2_user": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "description": "current user id",
+            "example": "65538751b374715901fe334a"
+          },
+          "name": {
+            "type": "string",
+            "description": "current user name",
+            "example": "Peter Peterson"
+          },
+          "email": {
+            "type": "string",
+            "description": "current user email",
+            "example": "batman2@mail.com"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

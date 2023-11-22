@@ -23,7 +23,7 @@ const registerSchema = Joi.object({
     .max(60)
     .messages({
       "any.required": `${requiredMessage}`,
-      "string.pattern.base": `invalid email`,
+      "string.pattern.base": `Invalid email`,
       "string.min": `${invalidLenthMessage}`,
       "string.max": `${invalidLenthMessage}`,
     }),
@@ -45,7 +45,7 @@ const loginSchema = Joi.object({
     .max(60)
     .messages({
       "any.required": `${requiredMessage}`,
-      "string.pattern.base": `invalid email`,
+      "string.pattern.base": `Invalid email`,
       "string.min": `${invalidLenthMessage}`,
       "string.max": `${invalidLenthMessage}`,
     }),
@@ -93,7 +93,7 @@ const unauthCommentSchema = Joi.object({
     .max(60)
     .messages({
       "any.required": `${requiredMessage}`,
-      "string.pattern.base": `invalid email`,
+      "string.pattern.base": `Invalid email`,
       "string.min": `${invalidLenthMessage}`,
       "string.max": `${invalidLenthMessage}`,
     }),

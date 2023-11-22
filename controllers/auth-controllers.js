@@ -76,7 +76,7 @@ const signin = async (req, res, next) => {
 const update = async (req, res, next) => {
   try {
     const { body, files, user } = req;
-    const filePath = files.avatar[0].path;
+    const filePath = files.avatar && files.avatar[0].path;
 
     if (filePath) {
       const source = tinify.fromFile(filePath);
@@ -124,7 +124,7 @@ const logout = async (req, res, next) => {
   try {
     const { _id } = req.user;
     await User.findByIdAndUpdate(_id, { token: "" });
-    res.status(204);
+    res.status(200).json({ message: "User signed out", iserId: _id });
   } catch (error) {
     next(error);
   }
