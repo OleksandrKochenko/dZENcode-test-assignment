@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const logger = require("morgan");
 const multer = require("multer");
 require("dotenv").config();
@@ -11,6 +12,7 @@ const apiRouter = require("./routes/api-routes");
 
 const app = express();
 
+app.set("views", path.join(__dirname, "/views"));
 app.set("view engine", "ejs");
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
