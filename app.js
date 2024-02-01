@@ -6,6 +6,7 @@ const multer = require("multer");
 require("dotenv").config();
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger-docs.json");
+const swaggerOptions = require("./swagger-opts");
 
 const authRouter = require("./routes/auth-routes");
 const apiRouter = require("./routes/api-routes");
@@ -22,20 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use("/", swaggerUi.serve);
-app.get(
-  "/",
-  swaggerUi.setup(swaggerDocument, {
-    customJs: [
-      "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.min.js",
-      "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-standalone-preset.min.js",
-    ],
-    customCssUrl: [
-      "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css",
-      "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-standalone-preset.min.css",
-      "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.css",
-    ],
-  })
-);
+app.get("/", swaggerUi.setup(swaggerDocument, swaggerOptions));
 app.use("/auth", authRouter);
 app.use("/api", apiRouter);
 
