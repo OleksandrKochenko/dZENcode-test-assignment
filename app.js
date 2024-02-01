@@ -21,7 +21,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.get("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/auth", authRouter);
 app.use("/api", apiRouter);
 
