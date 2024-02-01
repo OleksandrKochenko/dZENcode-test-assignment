@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "REST API for comments app",
-    "description": "dZENcode test assignment API documentation",
+    "title": "REST API for Comments App",
+    "description": "API provides CRUD operations for Comments App with User authorization features",
     "contact": {
       "name": "Oleksandr Kochenko",
       "url": "https://oleksandrkochenko.github.io/CV/",
@@ -12,11 +12,11 @@
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
     },
-    "version": "1.0.0"
+    "version": "1.0.1"
   },
   "servers": [
     {
-      "url": "https://dzencode-test-ryk0.onrender.com"
+      "url": "https://api-comments-chi.vercel.app/"
     },
     {
       "url": "http://localhost:3000/"
@@ -25,11 +25,11 @@
   "tags": [
     {
       "name": "Auth",
-      "description": "User authorisation"
+      "description": "User authorisation operations"
     },
     {
       "name": "Api",
-      "description": "Other operations"
+      "description": "Comments' CRUD operations"
     }
   ],
   "paths": {
@@ -168,7 +168,7 @@
         "tags": [
           "Auth"
         ],
-        "description": "Update user data (don't available to change e-mail)",
+        "description": "Update user data (e-mail change is not available)",
         "operationId": "update",
         "requestBody": {
           "content": {
@@ -233,7 +233,7 @@
         "tags": [
           "Auth"
         ],
-        "description": "Check user ligged in",
+        "description": "Check if User is logged in",
         "operationId": "current",
         "responses": {
           "200": {
@@ -279,7 +279,7 @@
         "tags": [
           "Auth"
         ],
-        "description": "Log out",
+        "description": "User log out",
         "operationId": "signout",
         "responses": {
           "200": {
@@ -325,7 +325,7 @@
         "tags": [
           "Api"
         ],
-        "description": "HTML form for testing reCAPTCHA validation on creating new comment by unauthorized user <br/> <b>To test, please open form on browser (<base-url>/api/test-form)<b/>",
+        "description": "HTML form for testing reCAPTCHA validation on creating new comment by unauthorized User <br/> <b>Please open following URL in browser to test form: https://api-comments-chi.vercel.app/api/test-form<b/>",
         "operationId": "testCaptcha",
         "responses": {
           "200": {
@@ -347,7 +347,7 @@
         "tags": [
           "Api"
         ],
-        "description": "Adds a new comment by unauthorized user with reCAPTCHA validation<br/> <b>To check response, please submit form on browser (<base-url>/api/test-form)</b> <br/> After submit you will be redirected to api/comment to check result",
+        "description": "Adds a new comment by unauthorized user with reCAPTCHA validation<br/> <b>To check response, please submit form on browser (https://api-comments-chi.vercel.app/api/test-form)</b> <br/> After submit you will be redirected to api/comment to check result",
         "operationId": "postUnauthComment",
         "responses": {
           "200": {
@@ -388,7 +388,7 @@
         "tags": [
           "Api"
         ],
-        "description": "Adds a new comment by authorized user",
+        "description": "Adds a new comment by authorized user (without CAPTCHA validation)",
         "operationId": "addAuthComment",
         "requestBody": {
           "content": {
@@ -689,7 +689,7 @@
         "tags": [
           "Api"
         ],
-        "description": "Deletes comment by authorized user (only own comments)",
+        "description": "Deletes comment by authorized user (only user's own comments)",
         "operationId": "deleteComment",
         "parameters": [
           {
@@ -778,7 +778,7 @@
         "tags": [
           "Api"
         ],
-        "description": "Returns users list",
+        "description": "Returns users list (Performed without authorization for presentation purposes, since the user database is a mock and does not include sensitive data)",
         "operationId": "getUsers",
         "responses": {
           "200": {
@@ -822,7 +822,7 @@
         "tags": [
           "Api"
         ],
-        "description": "Returns user by id",
+        "description": "Returns User by id (Performed without authorization for presentation purposes, since the user database is a mock and does not include sensitive data)",
         "operationId": "getUserById",
         "parameters": [
           {
