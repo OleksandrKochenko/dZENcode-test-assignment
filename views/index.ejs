@@ -6,18 +6,32 @@
     <title>Document</title>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   </head>
-  <body>
+  <body style="width: 302px; margin: 10px auto">
+    <h2 style="text-align: center; font-style: italic">
+      Simple page for testing <br />
+      reCAPTCHA validation
+    </h3>
     <h1>Send a comment</h1>
-    <form action="/api/comment" method="POST" id="comment-form">
+    <form
+      style="display: flex; flex-direction: column"
+      action="/api/comment"
+      method="POST"
+      id="comment-form"
+    >
       <label for="name">Name</label>
       <input type="text" name="name" required />
+
       <label for="email">Email</label>
       <input type="email" name="email" required />
       <label for="home_page">Home page</label>
       <input type="text" name="home_page" />
       <label for="text">Comment</label>
       <input type="text" name="text" required />
-      <div class="g-recaptcha" data-sitekey="<%=key%>"></div>
+      <div
+        style="margin: 10px 0"
+        class="g-recaptcha"
+        data-sitekey="<%=key%>"
+      ></div>
       <br />
 
       <input type="submit" value="Submit" />
