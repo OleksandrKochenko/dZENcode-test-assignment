@@ -22,7 +22,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use("/", swaggerUi.serve);
-app.get("/", swaggerUi.setup(swaggerDocument));
+app.get(
+  "/",
+  swaggerUi.setup(swaggerDocument, {
+    customCssUrl: [
+      "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css",
+      "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-standalone-preset.min.css",
+      "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.css",
+    ],
+  })
+);
 app.use("/auth", authRouter);
 app.use("/api", apiRouter);
 
