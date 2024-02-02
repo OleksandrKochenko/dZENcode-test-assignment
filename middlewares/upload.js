@@ -1,15 +1,15 @@
 const multer = require("multer");
-const path = require("path");
+// const path = require("path");
 const {
   imageMaxSize,
   imageFormats,
   textFormats,
 } = require("../helpers/constants");
 
-const destination = path.resolve("tmp");
+// const destination = path.resolve("tmp");
 
 const storage = multer.diskStorage({
-  destination,
+  destination: "/tmp",
   filename: (req, file, cb) => {
     const uniquePreffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
     const { originalname } = file;
