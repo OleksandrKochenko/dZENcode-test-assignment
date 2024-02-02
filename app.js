@@ -14,6 +14,7 @@ const apiRouter = require("./routes/api-routes");
 const app = express();
 
 app.set("views", path.join(__dirname, "/views"));
+app.set("tmp", path.join(__dirname, "/tmp"));
 app.set("view engine", "ejs");
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
