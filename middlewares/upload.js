@@ -6,7 +6,7 @@ const {
   textFormats,
 } = require("../helpers/constants");
 
-const destination = path.resolve("temp");
+const destination = path.resolve("tmp");
 
 const storage = multer.diskStorage({
   destination,
