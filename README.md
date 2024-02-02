@@ -86,12 +86,10 @@ Use [Links](#links) to test the app on web-service with Swagger API documentatio
 For this project were used:
 
 - Node.js
-
 - Express.js
-
 - MongoDB (Mongoose)
-
-- vercel.com - for deployment
+- Docker
+- Vercel - for deployment
 
 ## Other dependencies
 
